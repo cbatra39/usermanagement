@@ -1,0 +1,72 @@
+<div class ="bg-light m-5 p-4">
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Active Users</h5>
+          <h1 class="display-1"><%= Customer.where(:status =>true).count()%></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Inactive Users</h5>
+           <h1 class="display-1"><%= Customer.where(:status =>false).count()%></h1>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">Total users</h5>
+          <h1 class="display-1"><%= Customer.count()%></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <h1 class="mt-3">Users</h1>
+
+  <div id="customers">
+    <table class = "table table-striped">
+      <thead class="table-dark">
+        <th>
+          <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <i class="fa-sharp fa-solid fa-down"></i>
+              </div>
+        </th>
+        <th>Name</th>
+        <th>Info</th>
+        <th>Email</th>
+        <th>Status</th>
+
+        <th colspan="4"></th>
+      </thead>
+      <tbody>  
+        <% @customers.each do |c| %>
+          <tr id="<%= dom_id c%>">
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="<%=c.status%>" id="flexCheckDefault">
+              </div>
+            </td>
+            <td><%= c.name%></td>
+            <td><%= c.info%></td>
+            <td><%= c.email %></td>
+            <td><%= c.status == true ? 'Active' : 'Inactive'%></td>
+            <td><%= link_to "", c,class:"fa-regular fa-eye text-decoration-none" %></td>
+            <td><%= link_to "",edit_customer_path(c),class:"fa-solid fa-pencil text-decoration-none" %></td>
+            <td><%= link_to "",update_status_customer_path(c),data:{'turbo-method': :patch},class:"fa-solid fa-arrow-right-arrow-left text-decoration-none" %></td>
+            <td><%= link_to "", c,data:{'turbo-method': :delete},class:"fa-solid fa-trash"%></td>
+          </tr>
+        <% end %>      
+      </tbody>
+    </table>
+
+  </div>
+
+  <%= link_to "", new_customer_path,class:"fa-solid fa-user-plus text-decoration-none"%>
+</div>
